@@ -1,0 +1,17 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 3px solid #04838f;
+  gap: 5px;
+}
+
+.card-title {
+  color: #666666;
+}
+
+.card-value {
+  font-weight: bolder;
+}
