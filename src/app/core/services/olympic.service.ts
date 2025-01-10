@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { catchError, tap,map } from 'rxjs/operators';
-import { Olympic, PieChartData } from '../models/Models';
+import { catchError, tap, map } from 'rxjs/operators';
+import { Olympic } from '../models/Models';
 
 @Injectable({
   providedIn: 'root',
@@ -31,10 +31,32 @@ export class OlympicService {
       map((olympics: Olympic[]) => {
         if (!olympics) return [];
 
-        return olympics.map(olympic => ({
+        return olympics.map((olympic) => ({
           name: olympic.country,
-          value: olympic.participations.reduce((sum, p) => sum + p.medalsCount, 0)
+          value: olympic.participations.reduce(
+            (sum, p) => sum + p.medalsCount,
+            0
+          ),
         }));
+      })
+    );
+  }
+
+  getCountryLineChartData(countryName: string) {
+    return this.olympics$.pipe(
+      map((olympics: Olympic[]) => {
+        if (!olympics) return null;
+
+        const country = olympics.find((o) => o.country === countryName);
+        if (!country) return null;
+
+        return {
+          name: country.country,
+          series: country.participations.map((p) => ({
+            name: p.year.toString(),
+            value: p.medalsCount,
+          })),
+        };
       })
     );
   }

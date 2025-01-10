@@ -1,0 +1,24 @@
+<div class="details-container">
+  <h1 class="country-title">{{ countryName }}</h1>
+
+  <div class="cards-wrapper">
+    <app-card title="Number of entries" [value]="numberOfEntries"> </app-card>
+    <app-card title="Total number medals" [value]="totalMedals"> </app-card>
+    <app-card title="Total number of athletes" [value]="totalAthletes">
+    </app-card>
+  </div>
+
+  <div class="chart-container">
+    <ngx-charts-line-chart
+      [view]="view"
+      [results]="lineChartData"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+    >
+    </ngx-charts-line-chart>
+  </div>
+</div>
