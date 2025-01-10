@@ -9,7 +9,14 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
   },
-  { path: 'details/:country', component: DetailsComponent },
+  {
+    path: 'details/:country',
+    component: DetailsComponent
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent
+  },
   {
     path: '**', // wildcard
     component: NotFoundComponent,
@@ -21,4 +28,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
