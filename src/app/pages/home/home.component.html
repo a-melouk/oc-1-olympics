@@ -3,7 +3,10 @@
 
   <div class="cards-wrapper">
     <app-card title="Number of JOs" [value]="numberOfJos"></app-card>
-    <app-card title="Number of countries" [value]="numberOfCountries"></app-card>
+    <app-card
+      title="Number of countries"
+      [value]="numberOfCountries"
+    ></app-card>
   </div>
 
   <div class="chart-container">
@@ -17,8 +20,16 @@
       [trimLabels]="false"
       [maxLabelLength]="20"
       [doughnut]="false"
+      [arcWidth]="15"
       [animations]="true"
-      (select)="onSelect($event)">
+      (select)="onSelect($event)"
+    >
+      <ng-template #tooltipTemplate let-model="model">
+        <div ngx-tooltip>
+          <p>{{ model.name }}</p>
+          <p>🏅 {{ model.value }}</p>
+        </div>
+      </ng-template>
     </ngx-charts-pie-chart>
   </div>
 </div>
