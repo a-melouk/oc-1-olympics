@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from '../../core/services/olympic.service';
 import { Participation } from 'src/app/core/models/Participation';
 import { Olympic } from 'src/app/core/models/Olympic';
@@ -27,16 +27,23 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private olympicService: OlympicService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const country = this.route.snapshot.params['country'];
     this.countryName = country;
 
-    this.olympicService.getOlympics().subscribe((olympics) => {
-      const countryData = olympics?.find((o: Olympic) => o.country === country);
-      if (countryData) {
+    // First load the data, then process it
+    this.olympicService.loadInitialData().subscribe(() => {
+      this.olympicService.getOlympics().subscribe((olympics) => {
+        const countryData = olympics?.find((o: Olympic) => o.country === country);
+        if (!countryData) {
+          this.router.navigate(['/not-found']);
+          return;
+        }
+
         this.numberOfEntries = countryData.participations.length;
         this.totalMedals = countryData.participations.reduce(
           (sum: number, p: Participation) => sum + p.medalsCount,
@@ -46,13 +53,14 @@ export class DetailsComponent implements OnInit {
           (sum: number, p: Participation) => sum + p.athleteCount,
           0
         );
-      }
-    });
 
-    this.olympicService.getCountryLineChartData(country).subscribe((data) => {
-      if (data) {
-        this.lineChartData = [data];
-      }
+        // Load chart data after we confirm country exists
+        this.olympicService.getCountryLineChartData(country).subscribe(data => {
+          if (data) {
+            this.lineChartData = [data];
+          }
+        });
+      });
     });
   }
 }
