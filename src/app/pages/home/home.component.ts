@@ -12,6 +12,8 @@ import { Observable, of } from 'rxjs';
 export class HomeComponent implements OnInit {
   public olympics$: Observable<any> = of(null);
   pieChartData: PieChartData[] = [];
+  numberOfCountries: number = 0;
+  numberOfJos: number = 0;
 
   // Chart options
   view: [number, number] = [700, 400];
@@ -27,6 +29,14 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.olympicService.loadInitialData().subscribe(() => {
+      this.olympicService.getOlympics().subscribe(olympics => {
+        if (olympics) {
+          // Number of countries is the length of the array
+          this.numberOfCountries = olympics.length;
+          // Number of JOs is the length of participations of any country (they're all the same)
+          this.numberOfJos = olympics[0]?.participations.length || 0;
+        }
+      });
       this.olympicService.getPieChartData().subscribe(data => {
         console.log('Pie Chart Data:', data); // Debug log
         this.pieChartData = data;
