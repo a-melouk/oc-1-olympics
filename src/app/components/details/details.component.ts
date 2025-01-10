@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OlympicService } from '../../core/services/olympic.service';
-import { Olympic, Participation } from 'src/app/core/models/Models';
+import { Participation } from 'src/app/core/models/Participation';
+import { Olympic } from 'src/app/core/models/Olympic';
 
 @Component({
   selector: 'app-details',

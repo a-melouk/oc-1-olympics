@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OlympicService } from '../../core/services/olympic.service';
-import { PieChartData } from '../../core/models/Models';
+import { PieChartData } from 'src/app/core/models/PieChartData';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -22,14 +22,11 @@ export class HomeComponent implements OnInit {
   showLabels = true;
   isDoughnut = false;
 
-  constructor(
-    private olympicService: OlympicService,
-    private router: Router
-  ) {}
+  constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
     this.olympicService.loadInitialData().subscribe(() => {
-      this.olympicService.getOlympics().subscribe(olympics => {
+      this.olympicService.getOlympics().subscribe((olympics) => {
         if (olympics) {
           // Number of countries is the length of the array
           this.numberOfCountries = olympics.length;
@@ -37,7 +34,7 @@ export class HomeComponent implements OnInit {
           this.numberOfJos = olympics[0]?.participations.length || 0;
         }
       });
-      this.olympicService.getPieChartData().subscribe(data => {
+      this.olympicService.getPieChartData().subscribe((data) => {
         console.log('Pie Chart Data:', data); // Debug log
         this.pieChartData = data;
       });
