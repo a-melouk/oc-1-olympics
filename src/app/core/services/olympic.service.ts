@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap,map } from 'rxjs/operators';
+import { Olympic, PieChartData } from '../models/Models';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,19 @@ export class OlympicService {
         // can be useful to end loading state and let the user know something went wrong
         this.olympics$.next(null);
         return caught;
+      })
+    );
+  }
+
+  getPieChartData() {
+    return this.olympics$.pipe(
+      map((olympics: Olympic[]) => {
+        if (!olympics) return [];
+
+        return olympics.map(olympic => ({
+          name: olympic.country,
+          value: olympic.participations.reduce((sum, p) => sum + p.medalsCount, 0)
+        }));
       })
     );
   }

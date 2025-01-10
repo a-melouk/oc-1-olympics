@@ -6,21 +6,17 @@
     <app-card title="Number of countries" [value]="10"></app-card>
   </div>
 
-  <div *ngIf="(olympics$ | async) as olympics">
-
-    <div *ngFor="let item of olympics">
-      <p>Name: {{ item.country }}</p>
-      <div>
-        <a routerLink="/olympic-games/{{ item.id }}">View</a>
-        <div *ngFor="let participation of item.participations" >
-          <p>Number: {{participation.id}}</p>
-          <p>Year: {{participation.year}}</p>
-          <p>City: {{participation.city}}</p>
-          <p>Medal count : {{participation.medalCount}}</p>
-          <p>Athletes count : {{participation.athleteCount}}</p>
-          <hr>
-        </div>
-      </div>
-    </div>
+  <div class="chart-container">
+    <ngx-charts-pie-chart
+      [scheme]="'cool'"
+      [view]="[700, 400]"
+      [results]="pieChartData"
+      [gradient]="false"
+      [legend]="true"
+      [labels]="true"
+      [doughnut]="false"
+      [animations]="true"
+      (select)="onSelect($event)">
+    </ngx-charts-pie-chart>
   </div>
 </div>
