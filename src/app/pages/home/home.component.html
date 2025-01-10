@@ -9,11 +9,13 @@
   <div class="chart-container">
     <ngx-charts-pie-chart
       [scheme]="'cool'"
-      [view]="[700, 400]"
+      [view]="[800, 400]"
       [results]="pieChartData"
       [gradient]="false"
       [legend]="true"
       [labels]="true"
+      [trimLabels]="false"
+      [maxLabelLength]="20"
       [doughnut]="false"
       [animations]="true"
       (select)="onSelect($event)">
