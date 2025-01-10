@@ -1,4 +1,4 @@
-<div class="details-container">
+<div class="details-container" *ngIf="countryName; else loading">
   <h1 class="country-title">{{ countryName }}</h1>
 
   <div class="cards-wrapper">
@@ -22,3 +22,5 @@
     </ngx-charts-line-chart>
   </div>
 </div>
+
+<ng-template #loading> </ng-template>

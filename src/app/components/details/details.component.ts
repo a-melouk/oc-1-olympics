@@ -33,17 +33,20 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit() {
     const country = this.route.snapshot.params['country'];
-    this.countryName = country;
 
-    // First load the data, then process it
+    // Check if country exists first
     this.olympicService.loadInitialData().subscribe(() => {
       this.olympicService.getOlympics().subscribe((olympics) => {
         const countryData = olympics?.find((o: Olympic) => o.country === country);
+
+        // Redirect immediately if country not found
         if (!countryData) {
           this.router.navigate(['/not-found']);
           return;
         }
 
+        // Only set data and continue if country exists
+        this.countryName = country;
         this.numberOfEntries = countryData.participations.length;
         this.totalMedals = countryData.participations.reduce(
           (sum: number, p: Participation) => sum + p.medalsCount,
@@ -54,7 +57,6 @@ export class DetailsComponent implements OnInit {
           0
         );
 
-        // Load chart data after we confirm country exists
         this.olympicService.getCountryLineChartData(country).subscribe(data => {
           if (data) {
             this.lineChartData = [data];
