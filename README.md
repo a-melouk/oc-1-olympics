@@ -1,29 +1,74 @@
-# OlympicGamesStarter
+# Olympics Data Visualization Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+An interactive dashboard built with Angular that displays historical Olympic Games data, including medals per country and detailed country statistics.
 
-Don't forget to install your node_modules before starting (`npm install`).
+## Prerequisites
 
-## Development server
+- Node.js (v14 or higher)
+- npm (Node Package Manager)
+- Git
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installation
 
-## Build
+1. Clone the repository
+   ```bash
+   git clone https://github.com/a-melouk/oc-1-olympics.git
+   ```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+2. Navigate to the project directory
+   ```bash
+   cd oc-1-olympics
+   ```
 
-## Where to start
+3. Install dependencies
+   ```bash
+   npm install
+   ```
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+## Running the Application
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+To start the development server:
+   ```bash
+   ng serve
+   ```
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+The application will be available at `http://localhost:4200`. The app will automatically reload if you change any of the source files.
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+## Building for Production
 
-You're now ready to implement the requested features.
+To create a production build:
+   ```bash
+   ng build
+   ```
 
-Good luck!
+The build artifacts will be stored in the `dist/` directory.
+
+## Features
+
+- Responsive design that works on both desktop and mobile devices
+- Interactive dashboard showing medals per country
+- Detailed country view with:
+- Number of Olympic participations
+- Total medals won
+- Total number of athletes
+- Timeline graph showing medal count across different Olympic editions
+
+## Project Structure
+
+- `components/`: Reusable UI components
+- `pages/`: Main route components
+- `core/`: Business logic
+- `services/`: Angular services
+- `models/`: TypeScript interfaces
+
+## Technologies Used
+
+- Angular
+- TypeScript
+- RxJS
+- NgxCharts for data visualization
+- SCSS for styling
+
+## License
+
+This project is licensed under the MIT License.
