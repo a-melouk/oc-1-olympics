@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OlympicService } from '../../core/services/olympic.service';
 import { Participation } from 'src/app/core/models/Participation';
 import { Olympic } from 'src/app/core/models/Olympic';
-
+import { LineChartData } from 'src/app/core/models/LineChartData';
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -14,7 +14,7 @@ export class DetailsComponent implements OnInit {
   numberOfEntries: number = 0;
   totalMedals: number = 0;
   totalAthletes: number = 0;
-  lineChartData: any[] = [];
+  lineChartData: LineChartData[] = [];
 
   // Chart options
   view: [number, number] = [800, 400];
@@ -29,40 +29,46 @@ export class DetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private olympicService: OlympicService
-  ) { }
+  ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     const country = this.route.snapshot.params['country'];
 
     // Check if country exists first
     this.olympicService.loadInitialData().subscribe(() => {
-      this.olympicService.getOlympics().subscribe((olympics) => {
-        const countryData = olympics?.find((o: Olympic) => o.country === country);
+      this.olympicService
+        .getOlympics()
+        .subscribe((olympics: Olympic[] | null) => {
+          const countryData = olympics?.find(
+            (o: Olympic) => o.country === country
+          );
 
-        // Redirect immediately if country not found
-        if (!countryData) {
-          this.router.navigate(['/not-found']);
-          return;
-        }
-
-        // Only set data and continue if country exists
-        this.countryName = country;
-        this.numberOfEntries = countryData.participations.length;
-        this.totalMedals = countryData.participations.reduce(
-          (sum: number, p: Participation) => sum + p.medalsCount,
-          0
-        );
-        this.totalAthletes = countryData.participations.reduce(
-          (sum: number, p: Participation) => sum + p.athleteCount,
-          0
-        );
-
-        this.olympicService.getCountryLineChartData(country).subscribe(data => {
-          if (data) {
-            this.lineChartData = [data];
+          // Redirect immediately if country not found
+          if (!countryData) {
+            this.router.navigate(['/not-found']);
+            return;
           }
+
+          // Only set data and continue if country exists
+          this.countryName = country;
+          this.numberOfEntries = countryData.participations.length;
+          this.totalMedals = countryData.participations.reduce(
+            (sum: number, p: Participation) => sum + p.medalsCount,
+            0
+          );
+          this.totalAthletes = countryData.participations.reduce(
+            (sum: number, p: Participation) => sum + p.athleteCount,
+            0
+          );
+
+          this.olympicService
+            .getCountryLineChartData(country)
+            .subscribe((data: LineChartData | null) => {
+              if (data) {
+                this.lineChartData = [data];
+              }
+            });
         });
-      });
     });
   }
 }
