@@ -86,4 +86,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  goBack(): void {
+    this.router.navigate(['/']);
+  }
 }
