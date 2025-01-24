@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { OlympicService } from '../../core/services/olympic.service';
 import { PieChartData } from 'src/app/core/models/PieChartData';
 import { Olympic } from 'src/app/core/models/Olympic';
 import { Observable, of } from 'rxjs';
+import { LegendPosition } from '@swimlane/ngx-charts';
 
 interface ChartSelectEvent {
   name: string;
@@ -26,15 +27,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   numberOfJos: number = 0;
 
   // Chart options
-  view: [number, number] = [700, 400];
+  view: [number, number] = [700, 400]; // Initial dimensions
   gradient = false;
   showLegend = true;
   showLabels = true;
   isDoughnut = false;
+  legendPosition: LegendPosition = LegendPosition.Below;
 
   constructor(private olympicService: OlympicService, private router: Router) {}
 
   ngOnInit(): void {
+    this.onResize(); // Set initial dimensions and legend position
     this.olympicService
       .loadInitialData()
       .pipe(takeUntil(this.destroy$)) // Unsubscribe when destroy$ emits
@@ -58,6 +61,20 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.pieChartData = data;
           });
       });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?: any): void {
+    const width = window.innerWidth * 0.9; // 90% of window width
+    const height = window.innerHeight * 0.5; // 50% of window height
+    this.view = [width, height];
+
+    // Adjust legend position based on screen width
+    if (window.innerWidth <= 600) {
+      this.legendPosition = LegendPosition.Below; // Move legend to the bottom
+    } else {
+      this.legendPosition = LegendPosition.Right; // Default to right
+    }
   }
 
   onSelect(event: ChartSelectEvent): void {

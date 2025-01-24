@@ -12,7 +12,7 @@
   <div class="chart-container">
     <ngx-charts-pie-chart
       [scheme]="'cool'"
-      [view]="[800, 400]"
+      [view]="view"
       [results]="pieChartData"
       [gradient]="false"
       [legend]="true"
@@ -22,6 +22,7 @@
       [doughnut]="false"
       [arcWidth]="15"
       [animations]="true"
+      [legendPosition]="legendPosition"
       (select)="onSelect($event)"
     >
       <ng-template #tooltipTemplate let-model="model">
