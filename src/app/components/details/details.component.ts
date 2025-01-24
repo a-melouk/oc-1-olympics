@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -37,6 +37,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.onResize(); // Set initial dimensions
     const country = this.route.snapshot.params['country'];
 
     // Check if country exists first
@@ -80,6 +81,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
               });
           });
       });
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event?: any): void {
+    const width = window.innerWidth * 0.9; // 90% of window width
+    const height = window.innerHeight * 0.5; // 50% of window height
+    this.view = [width, height];
   }
 
   ngOnDestroy(): void {

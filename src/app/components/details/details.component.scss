@@ -1,5 +1,5 @@
 .details-container {
-  padding: 20px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,6 +12,7 @@
     color: white;
     padding: 10px;
     border-radius: 10px;
+    box-sizing: border-box;
   }
 
   .cards-wrapper {
@@ -19,11 +20,16 @@
     margin-bottom: 40px;
     gap: 20px;
     justify-content: space-between;
-  }
-
-  .chart-container {
     width: 100%;
-    height: 400px;
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-wrapper {
+    flex-direction: column;
+    margin: 0;
+    gap: 20px;
+    padding-inline: 50px;
   }
 }
 
