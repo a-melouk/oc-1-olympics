@@ -20,6 +20,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  padding-inline: 20px;
 }
 
 .chart-container {
@@ -35,16 +36,17 @@
   }
 
   // Adjust legend styles for small screens
+
   @media (max-width: 600px) {
     ::ng-deep .legend-labels {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      text-align: center;
+      flex-direction: column; // Stack legend items vertically
+      width: fit-content;
+      padding: 10px;
     }
 
     ::ng-deep .legend-label {
-      margin: 5px;
+      margin: 5px 0;
     }
   }
 }
